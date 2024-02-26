@@ -10,13 +10,17 @@ Real-time (latency <10 ms)  data streaming platform
 Isolated kafka platform on 1 or few severs. Can use cloud, on-premise, etc.
 
 1) Contains Topics
-2) Devided between brokers
+2) Comopsed of multiple brokers (servers)
 
 ### Architecture
 
 #### Kafka Broker
 
-Phisical/viratual kafka server
+1) Broker is server
+2) Identified by ID (integer)
+3) Contains certain kafka topic partitions
+4) After connacting to any broker (calld a bootstrap broker), you will be connected to the entire cluster (kafka clients have smart mechanics for that)
+5) good to start - 3 brokers, some clusters could have over 100 brokers
 
 #### Producers
 
@@ -76,7 +80,7 @@ A particular stream of data
 1) Identified by name
 2) Supports any kind of message format (json, binary, etc)
 3) Split in partitions
-4) One topic (his partitions) are devided between brokers based on partitions param
+4) One topic (his partitions) are destributed among brokers based on partitions param
 5) Contains copy of partitions are based on replication-factor param
 6) Data is kept only for a limited time (default - one week, configurable)
 7) Kafka topic data is immutable (can't be changed - writed in "kafka log")
