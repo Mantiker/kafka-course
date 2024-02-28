@@ -26,7 +26,7 @@ Isolated kafka platform on 1 or few severs. Can use cloud, on-premise, etc.
 
 Producers write data to topics (which are made of partitions)
 
-1) Producers know to which partition to write to (and which Kafka broker has it)
+1) Producers know to which partition to write to (to partition leader only, and which Kafka broker has it)
 2) In case of Kafka broker failures, Producer will automatically recover
 3) Producer can send a key with the message (with different key complexity - string, number, binary, etc)
 4) If key is null, data is sent round robin (partition 0, then 1, then 2, ...)
@@ -38,7 +38,7 @@ Producers write data to topics (which are made of partitions)
 
 Consumers read data from a topic - pull model
 
-1) Consumers automatically know which broker to read from
+1) Consumers automatically know which broker to read from (from leader by default)
 2) In case of broker failure consumers know how to recover
 3) Data is read in order frmo low to high offset within each partition
 4) Consumer uses desirializers on key and value of message
@@ -88,11 +88,13 @@ A particular stream of data
 #### Partition
 
 1) Represents topic partialy
-2) Messages in each partition ordered
-3) Each mesage in partition has id (offset) => id is not a Key
-4) Each partiton can have different current offset (offset only have a meaning for a specific partition)
-5) Data is assigned randomly to a partition unless a key is provided
-6) If data has a key (producr posts key + message) different messages with the same key always go through same partition. Order is guaranteed only within a partition (not across partitions)
+2) For given partition only one broker could be a leader
+3) Has a leader and multiple replicas (ISR -> in-sync replica)
+3) Messages in each partition ordered
+4) Each mesage in partition has id (offset) => id is not a Key
+5) Each partiton can have different current offset (offset only have a meaning for a specific partition)
+6) Data is assigned randomly to a partition unless a key is provided
+7) If data has a key (producr posts key + message) different messages with the same key always go through same partition. Order is guaranteed only within a partition (not across partitions)
 
 #### Messages
 
