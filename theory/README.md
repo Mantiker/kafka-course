@@ -32,7 +32,7 @@ Producers write data to topics (which are made of partitions)
 4) If key is null, data is sent round robin (partition 0, then 1, then 2, etc)
 5) If key is NOT null, data for the same key sent always to the same partition (based on hashing strategy)
 6) Message ordering in partition based on key
-7) Has default serializers: srting/json, int/float, avro, protobuff, etc
+7) Has default serializers: srting/json, int/float, avro, protobuff, ...
 
 #### Consumers
 
