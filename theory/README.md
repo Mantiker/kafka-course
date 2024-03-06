@@ -33,6 +33,10 @@ Producers write data to topics (which are made of partitions)
 5) If key is NOT null, data for the same key sent always to the same partition (based on hashing strategy)
 6) Message ordering in partition based on key
 7) Has default serializers: srting/json, int/float, avro, protobuff, ...
+8) Producers can choose to receive acknowledgement of data writes:
+    - acks = 0: producer won't wait for acknowledgement (possible data loss)
+    - acks = 1: producer will wait for leader acknowledgement (limited data loss)
+    - acks = all: Leader + replicas acknowledgement (no data loss)
 
 #### Consumers
 
