@@ -14,6 +14,18 @@ Isolated kafka platform on 1 or few severs. Can use cloud, on-premise, etc.
 
 ### Architecture
 
+#### Zookeper
+
+1) Zookeeper manages brokers (keeps a list of them)
+2) Zookeeper helps in performing leader election for partitions
+3) Zookeeper sends notifications to Kafka in case of changes (e.g. new topic, broker list, brocker comes up, delete topics, etc...)
+4) Kafka 2.x can't work WITHOUT Zookeeper
+5) Kafka 3.x can work without Zookeeper (KIP-500) - using Kafka Raft instead
+6) Kafka 4.x will not have Zookeeper
+7) Zookeeper by design operates with an odd number of servers (1,3,5,7, ...)
+8) Zookeeper has a leader (writes), the rest of the servers are followers (reads)
+9) Zookeeper does NOT store consumer offsets with Kafka > v0.10
+
 #### Kafka Broker
 
 1) Broker is server
